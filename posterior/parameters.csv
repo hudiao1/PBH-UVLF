@@ -1,0 +1,17 @@
+column_zero_based,name,definition
+0,logM_PBH,log10(initial PBH mass / Msun)
+1,logf_PBH,log10(initial PBH dark-matter fraction)
+2,loglambda_E68,"log10(Eddington ratio); redshift bin [6,8.5)"
+3,loglambda_E9,"log10(Eddington ratio); redshift bin [8.5,9.5)"
+4,loglambda_E10,"log10(Eddington ratio); redshift bin [9.5,10.5)"
+5,loglambda_E11,"log10(Eddington ratio); redshift bin [10.5,11.5)"
+6,loglambda_E12,"log10(Eddington ratio); redshift bin [11.5,13.5)"
+7,loglambda_E13p5,"log10(Eddington ratio); redshift bin [13.5,1000]"
+8,alphastar,low-mass SF slope
+9,betastar,high-mass SF slope
+10,epsilonstar_slope,redshift slope of log10 epsilon_star
+11,epsilonstar_icept,intercept of log10 epsilon_star
+12,Mc_slope,redshift slope of log10 Mc
+13,Mc_icept,intercept of log10(Mc/Msun)
+14,sigma_MUV,UV magnitude scatter in mag
+15,Q,halo accretion parameter

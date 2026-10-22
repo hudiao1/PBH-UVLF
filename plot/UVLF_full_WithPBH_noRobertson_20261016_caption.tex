@@ -1,0 +1,67 @@
+% Revised copy: legend abbreviations, suffixes, and both observed-frame theoretical curves are explained explicitly.
+% Use inside a LaTeX figure environment after \includegraphics.
+% Requires natbib (or another bibliography package supporting \citep)
+% and amssymb (used by a cited paper title containing \gtrsim); amsmath is used by the model-parameter notation.
+\caption{\label{fig:uvlf-z6-12p5}
+Rest-frame ultraviolet luminosity functions from $z=6$ to $z=12.5$.
+Panels \textbf{(a)}--\textbf{(g)} show the binned number density
+$\phi$ as a function of absolute UV magnitude $M_{\rm UV}$ at
+$z=6$, 7, 8, 9, 10, 11, and 12.5, respectively.
+The primary measurements are emphasized with filled black symbols:
+circles show the HST determinations of Bouwens et al. at $z=6$--8
+\citep{Bouwens2021UVLF}, and squares show the JWST PRIMER
+determinations of Donnan et al. at $z=9$--12.5
+\citep{Donnan2024PRIMER}.
+Colored open symbols show literature measurements from
+Adams et al. \citep{Adams2024EPOCHS}, McLeod et al. \citep{McLeod2024UVLF},
+Franco et al.
+\citep{Franco2025COSMOSWeb}, Harikane et al.
+\citep{Harikane2025Spectroscopic}, Rojas-Ruiz et al.
+\citep{RojasRuiz2025BoRG}, Curtis-Lake et al.
+\citep{CurtisLake2026JADESDR4}, and Whitler et al.
+\citep{Whitler2026JADES}.
+Legend labels combine an abbreviated first-author surname with the
+two-digit publication year; \mbox{C.-Lake} and
+\mbox{R.-Ruiz} abbreviate Curtis-Lake and Rojas-Ruiz,
+respectively. Additional suffixes distinguish independently analysed
+samples: \mbox{C.-Lake+26 D} and \mbox{C.-Lake+26 M} denote the
+Curtis-Lake Deep and Medium tiers; the 814, 115, and 150 suffixes for
+Franco+25 denote the F814W-, F115W-, and F150W-dropout selections;
+the 115 and 150 suffixes for Whitler+25 denote the F115W- and
+F150W-dropout selections; and 1747 and 2426 for R.-Ruiz+25 identify
+the corresponding JWST GO programme samples. These suffixes are
+sample identifiers, not redshifts or sample sizes.
+Horizontal and vertical bars reproduce the reported magnitude and
+number-density uncertainties from each source; their statistical
+definitions are therefore source dependent and have not been
+homogenized. For a one-sided limit, the vertical error-bar arm in the
+arrow direction is suppressed to avoid overplotting, while any
+reported arm in the opposite direction is retained; this display-only
+convention does not alter the tabulated source uncertainties. Thin
+open arrows are drawn collinearly with the vertical error-bar direction
+at the same $M_{\rm UV}$: upward arrows denote lower limits on $\phi$,
+whereas downward arrows denote upper limits.
+The green open hexagon in panel \textbf{(b)} is the Curtis-Lake et al.
+Deep/JWST lower limit at $z_{\rm eff}=7.091$,
+$M_{\rm UV}=-17.53^{+0.12}_{-0.05}$, and
+$\phi>5.5\times10^{-4}\ {\rm mag}^{-1}\,{\rm Mpc}^{-3}$; it is one
+constraint rather than several overlapping measurements.
+The Curtis-Lake Deep and Medium tiers are retained as independent
+samples. One Harikane et al. lower-limit row at $z=7$,
+$M_{\rm UV}=-23.7$, and $\phi=2.3\times10^{-9}\
+{\rm mag}^{-1}\,{\rm Mpc}^{-3}$ is not displayed because its central
+anchor lies below the fixed vertical range. Two black curves compare the theoretical UV luminosity functions. The solid With PBH curve uses fixed Planck-2018 cosmology and the supplied 16-parameter MAP vector with free astrophysical parameters. Halo PBHs merge instantaneously at $z=20$ and subsequently grow through accretion. The PBH model uses total-matter fluctuations; the No PBH reference retains its existing non-neutrino-matter convention. The dotted No PBH curve uses the corrected no-PBH astrophysical parameter vector supplied in the parameter image while setting $M_{\rm PBH}=f_{\rm PBH}=0$ and explicitly omitting both PBH power-spectrum and PBH accretion-luminosity contributions. Both curves are mapped back to the published observational frame using the inverse dust-extinction, magnitude-bin-width, and Alcock--Paczynski distance and volume transformations used for the fitting data; the inverse dust mapping is active only at $z\leq8$. Ten additional faint-end measurements are shown: two from Adams et al. (2025),
+four from Leung et al. (2023), and four from Pérez-González et al. (2023)
+\citep{Adams2025MediumBands,Leung2023NGDEEP,PerezGonzalez2023MIDIS}.
+Their legend markers are a pink open circle, a blue open square, and a gold plus,
+respectively; P.-Gonz. abbreviates Pérez-González.
+All verified points with $M_{\rm UV}>-18$ from these three data selections are included,
+not only those close to the model. New horizontal bars denote the reported magnitude-bin half-widths.
+Adams bins $8.5<z<9.5$ and $9.5<z<11.5$ are displayed in panels $z=9$ and $z=10$;
+Leung bins $8.5<z<9.5$ and $9.5<z<12$ are displayed at $z=9$ and $z=11$;
+Pérez-González bins $8<z<10$, $10<z<11.5$, and $11.5<z<13$ are displayed at $z=9$, $11$, and $12.5$.
+These representative panel assignments are for visual comparison, not selection-function-weighted model predictions.
+The new data are not used to refit the model or appended to the likelihood.
+NGDEEP and MIDIS partially overlap in HUDF-Par2, and the primary Donnan sample also uses NGDEEP/JADES;
+these estimates must not all be treated as statistically independent.
+Literature cosmologies and selection functions have not been homogenized in this preview.}

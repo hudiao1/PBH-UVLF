@@ -1,0 +1,3 @@
+# Requires a separately installed MPI implementation.
+schwimmbad==0.4.2
+mpi4py==4.1.1

@@ -1,0 +1,34 @@
+# 高红移 M_UV > -18 的观测文献核查（2026-10-16）
+# 不修改现有图、原始数据或模型参数。
+# phi、err_minus、err_plus 单位：Mpc^-3 mag^-1；M_UV 为 AB mag。
+# 这里列出核验到的相关研究在目标星等区域的分箱点，包含不吻合的点。
+# 红移 z_panel 仅用于与当前七面板曲线作展示级比较，不表示完成了选择函数加权。
+# PBH 值直接读取当前完整图的 observed-frame 曲线，在 M_UV 方向对 log(phi) 线性插值。
+# 未统一文献间宇宙学；未按文献实际星等箱宽重新卷积；未进行新拟合或模型选择。
+# 宽红移样本不能简单当成单一红移；吻合仅指点位初步比较，不是 PBH 独有证据。
+# Leung 2023 与 Perez-Gonzalez 2023 部分共享 HUDF-Par2 天区；Donnan 2024 也使用 JADES/NGDEEP。
+# Whitler 在现图中标为 +26，但正式出版版本为 ApJ 992, 63 (2025), doi:10.3847/1538-4357/adfddc。
+# 原文出处：
+# A25: Adams et al. 2025, The impact of medium-width bands on the selection and subsequent luminosity function measurements of high-z galaxies, MNRAS 542, 1705, Table 3, deeper 0.2 arcsec catalogue; https://arxiv.org/html/2502.10282v2#S6
+# L23: Leung et al. 2023, NGDEEP Epoch 1, ApJL 954 L46, Table 2; doi:10.3847/2041-8213/acf365; publisher PDF https://pure.rug.nl/ws/portalfiles/portal/897388074/Leung_2023_ApJL_954_L46.pdf
+# P23: Perez-Gonzalez et al. 2023, Life beyond 30, ApJL 951 L1, Table 2; doi:10.3847/2041-8213/acd9d0; https://arxiv.org/pdf/2302.02429
+# W25: Whitler et al. 2025, The z >= 9 galaxy UV luminosity function from JADES, ApJ 992 63, Table 5; https://arxiv.org/html/2501.00984v3#S5.SS2
+# C26: Chemerynska et al. 2026, The first GLIMPSE ..., MNRAS 546 staf2267, Table 1; https://doi.org/10.1093/mnras/staf2267
+# C26 的 z=13 数据当前放在 z=12.5 面板；不可当作严格同一红移比较。
+# MUV=-16.5 的 C26 对照数值：z10 phi=1.174897555e-3, PBH=5.0545e-3（约4.30倍）；z11 phi=2.630267992e-3, PBH=7.6893e-3（约2.92倍）。
+# 2026新增候选：Moreira Goolsby et al., arXiv:2607.01129v1, preprint, Figure 8/Table 2, z~9/11。
+# 上述2026预印本是同一GLIMPSE/AS1063视场的独立分析，不是独立天区；本次未提取Figure 8的分箱phi，不宣称其已数值支持PBH。
+# 检查但不满足严格 M_UV>-18 的例子：Asada et al. 2026 CANUCS+TEC, Table 4 最暗箱 -19<M_UV<-18；McLeod et al. 2026 arXiv:2604.16666 Table 3 在z13.5最暗点为-18.325。
+reference	z_min	z_max	z_panel	M_UV	phi	err_minus	err_plus	already_in_current_figure
+A25	8.5	9.5	9	-17.50	1.6303e-3	5.841e-4	5.841e-4	no
+A25	9.5	11.5	10	-17.75	6.149e-4	2.417e-4	2.417e-4	no
+L23	8.5	9.5	9	-17.85	1.700e-3	6.500e-4	8.500e-4	no
+L23	8.5	9.5	9	-17.35	5.190e-3	1.980e-3	2.480e-3	no
+L23	9.5	12.0	11	-17.95	5.910e-4	2.930e-4	4.190e-4	no
+L23	9.5	12.0	11	-17.25	2.690e-3	1.240e-3	1.660e-3	no
+P23	8.0	10.0	9	-17.50	1.6982436525e-3	5.5009003096e-4	4.8951797149e-4	no
+P23	8.0	10.0	9	-16.50	5.0118723363e-3	2.3203375323e-3	2.2324872645e-3	no
+P23	10.0	11.5	11	-17.50	1.5135612484e-3	9.1100166236e-4	9.4114766725e-4	no
+P23	11.5	13.0	12.5	-17.30	1.3489628826e-3	9.5085571204e-4	1.2214329002e-3	no
+W25	8.5	12.0	10	-17.40	3.300e-3	8.000e-4	8.000e-4	yes
+W25	12.0	16.0	12.5	-17.50	7.100e-4	2.800e-4	3.300e-4	yes

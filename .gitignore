@@ -1,0 +1,11 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+*.h5
+*.hdf5
+*.local.json
+plot/*.pdf
+plot/*.svg
+plot/*.png
