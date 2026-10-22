@@ -1,5 +1,7 @@
 # Reproducibility notes
 
+English | [中文](REPRODUCIBILITY.zh-CN.md)
+
 ## Distribution changes
 
 - Original files in the author's `data_availability` directory were not edited.

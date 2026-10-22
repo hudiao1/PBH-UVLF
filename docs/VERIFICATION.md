@@ -1,5 +1,7 @@
 # Verification record (2026-10-22)
 
+English | [中文](VERIFICATION.zh-CN.md)
+
 - All three notebooks executed cell by cell from top to bottom in an IPython session using a non-interactive Matplotlib backend. This did not use a Jupyter kernel/nbclient execution service.
 - UVLF: 150 rendered observations, 55 primary observations, seven redshift panels and 14 cached theory curves; all notebook input, data-preservation, layout and exported-file assertions passed. Rendered PNG inspected.
 - Accretion history: three central values with asymmetric intervals and three upper limits; notebook transform and export checks passed. Rendered PNG inspected.
