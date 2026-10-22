@@ -18,10 +18,8 @@ Analysis code and supporting data for a study of primordial black holes (PBHs) a
 | `posterior/parameters.csv` | Column order and definitions for the posterior arrays |
 | `scripts/export_posterior.py` | Recreate the portable posterior file from the full HDF5 chain |
 | `figures/` | PDF previews regenerated from the supplied notebooks |
-| `docs/REPRODUCIBILITY.md` | Verification scope, known inconsistencies and changes made for distribution |
-| `docs/SOURCE_MANIFEST.json` | Provenance and original checksums of supplied or recovered inputs |
 
-This release preserves the supplied scientific calculations. It is not a new MCMC run or a validation of the paper's statistical claims. Review `docs/REPRODUCIBILITY.md` before using the posterior intervals.
+This release preserves the supplied scientific calculations. It is not a new MCMC run or a validation of the paper's statistical claims.
 
 ## Installation
 
@@ -61,7 +59,7 @@ The full original chain is about 1.9 GB and is not included in this GitHub repos
 
 ## Data provenance and units
 
-The fitting input `mcmc/UVLF_PBH.txt` has six columns: redshift; M_UV (AB mag); magnitude-bin width (mag); Phi_UV (Mpc^-3 mag^-1); upper uncertainty; lower uncertainty. The supplied likelihood applies a minimum 20% uncertainty and its own dust/cosmology transformations; keep this input table unmodified. Its header identifies the HST source (arXiv:2102.07775), but the high-redshift block needs source confirmation; see the reproducibility notes.
+The fitting input `mcmc/UVLF_PBH.txt` has six columns: redshift; M_UV (AB mag); magnitude-bin width (mag); Phi_UV (Mpc^-3 mag^-1); upper uncertainty; lower uncertainty. The supplied likelihood applies a minimum 20% uncertainty and its own dust/cosmology transformations; keep this input table unmodified. Its header identifies the HST source (arXiv:2102.07775), but the high-redshift block needs source confirmation.
 
 `mcmc/Beta_parameters.txt` records the dust UV-slope calibration and identifies arXiv:1306.2950, Table 3. `plot/UVLF_literature_data.txt` and the exported `*_data.txt` provide row-level references, source tables, redshift intervals, uncertainty definitions, limits and display flags. Comparison-only points are not additional likelihood inputs. Published observational cosmologies and selection functions have not all been homogenized.
 

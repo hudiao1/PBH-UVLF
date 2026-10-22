@@ -18,11 +18,8 @@
 | `posterior/parameters.csv` | 后验数组的参数列顺序及定义 |
 | `scripts/export_posterior.py` | 从完整 HDF5 链重新导出后验样本文件 |
 | `figures/` | 运行所提供 notebook 后生成的 PDF 预览图 |
-| [docs/REPRODUCIBILITY.zh-CN.md](docs/REPRODUCIBILITY.zh-CN.md) | 复现范围、已知不一致，以及为发布所做的改动 |
-| [docs/VERIFICATION.zh-CN.md](docs/VERIFICATION.zh-CN.md) | 已实际执行的检查及其限制 |
-| `docs/SOURCE_MANIFEST.json` | 作者提供或从已有项目找回的输入文件的来源及原始校验值 |
 
-本次发布保留作者提供的科学计算设置。整理过程中没有重新运行 MCMC，也没有验证论文的统计主张。使用后验区间前，请先阅读[复现说明](docs/REPRODUCIBILITY.zh-CN.md)。
+本次发布保留作者提供的科学计算设置。整理过程中没有重新运行 MCMC，也没有验证论文的统计主张。
 
 ## 安装
 
@@ -62,7 +59,7 @@ mpiexec -n 4 python mcmc/emcee_UVLF_P18_a16_merged_z20.py
 
 ## 数据来源与单位
 
-拟合输入文件 `mcmc/UVLF_PBH.txt` 包含六列：红移、M_UV（AB mag）、星等箱宽（mag）、Phi_UV（Mpc^-3 mag^-1）、上侧误差和下侧误差。所提供的似然程序会施加最低 20% 的误差，并执行其中定义的尘埃及宇宙学转换；请保留原输入表。文件表头标注了 HST 数据来源（arXiv:2102.07775），高红移数据块的来源仍需确认，详见复现说明。
+拟合输入文件 `mcmc/UVLF_PBH.txt` 包含六列：红移、M_UV（AB mag）、星等箱宽（mag）、Phi_UV（Mpc^-3 mag^-1）、上侧误差和下侧误差。所提供的似然程序会施加最低 20% 的误差，并执行其中定义的尘埃及宇宙学转换；请保留原输入表。文件表头标注了 HST 数据来源（arXiv:2102.07775），高红移数据块的来源仍需确认。
 
 `mcmc/Beta_parameters.txt` 提供尘埃修正所用的紫外光谱斜率校准，并注明来源为 arXiv:1306.2950 的表 3。`plot/UVLF_literature_data.txt` 和导出的 `*_data.txt` 逐行记录文献、原表位置、红移区间、误差定义、上下限类型和显示标记。仅用于比较的观测点没有额外加入似然。不同文献的观测宇宙学和选择函数尚未全部统一。
 
