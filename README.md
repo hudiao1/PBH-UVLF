@@ -9,17 +9,21 @@ Analysis code and supporting data for a study of primordial black holes (PBHs) a
 | Path | Contents |
 | --- | --- |
 | `mcmc/` | Supplied 16-parameter model and MPI/emcee sampler; UVLF likelihood input and dust-calibration table |
-| `plot/UVLF_full_WithPBH_noRobertson_20261016.ipynb` | Seven-panel UVLF plot using the supplied cached theoretical curves |
-| `plot/prl_free_sf_accretion_rate_v22.ipynb` | Plot of six supplied Eddington-ratio constraints and corresponding accretion rates |
+| `plot/UVLF_full_WithPBH_MAP2_cutoff_20261027.ipynb` | Seven-panel UVLF plot recomputing the updated PBH cutoff at the supplied MAP2 parameter vector |
+| `plot/prl_free_sf_accretion_rate_v26.ipynb` | Plot of six supplied Eddington-ratio constraints and corresponding accretion rates |
 | `plot/statistics and plot_F_216_consistent_MCSamples_shortest68.ipynb` | Supplied posterior-analysis notebook, adapted to read the portable sample file |
 | `plot/*.txt` | Literature observation ledgers, cached theory curves, and plotting inputs/exports |
-| `posterior/posterior_samples.npz` | 6512 equally weighted samples selected using the supplied notebook's processing rules |
+| `posterior/posterior_samples.npz` | 4860 equally weighted samples selected using the supplied notebook's processing rules |
 | `posterior/metadata.json` | Chain checksum, processing settings, excluded walker indices and array dimensions |
 | `posterior/parameters.csv` | Column order and definitions for the posterior arrays |
 | `scripts/export_posterior.py` | Recreate the portable posterior file from the full HDF5 chain |
 | `figures/` | PDF previews regenerated from the supplied notebooks |
 
 This release preserves the supplied scientific calculations. It is not a new MCMC run or a validation of the paper's statistical claims.
+
+## Current version
+
+Updated from the supplied `emcee_UVLF_P18_a16_merged_k.py` and posterior notebook, the MAP2 UVLF notebook (2026-10-27), and Eddington-ratio notebook v26. The source chain contains 60000 iterations; walkers 10, 55, 76 and 89 are excluded by the supplied movement filter. The accretion summary is author supplied and is not recomputed from the thinned sample snapshot. Older No PBH/reference tables remain because the current UVLF notebook reads them. The UVLF MAP2 parameter vector is fixed by that supplied notebook; it is not replaced by the largest-log-posterior point of the exported thinned samples.
 
 ## Installation
 
@@ -40,9 +44,9 @@ cd plot
 jupyter lab
 ```
 
-Open either plotting notebook and run its cells from top to bottom. Keep the notebook working directory at `plot/`; filenames in these notebooks are relative to that directory. The UVLF notebook reads cached model curves and does not perform a new fit. The accretion-rate notebook plots supplied numerical constraints and does not infer them from the posterior snapshot. Times New Roman is requested; systems without that font may render a fallback.
+Open the required plotting notebook and run its cells from top to bottom. Keep the notebook working directory at `plot/`; filenames in these notebooks are relative to that directory. The UVLF notebook recomputes the With PBH curves using the supplied MAP2 parameter vector and updated PBH cutoff, and retains the cached No PBH reference. It does not perform a new fit. The accretion-rate notebook plots supplied numerical constraints and does not infer them from the posterior snapshot. Times New Roman is requested; systems without that font may render a fallback.
 
-The posterior-analysis notebook reads `../posterior/posterior_samples.npz`. Original processing: discard 30000 steps, reject walkers whose post-burn-in fraction of moving steps is below 0.02, then use emcee thinning by 1000. There are 74 retained draws per kept walker, 88 kept walkers and 16 parameters. Full-resolution traces and autocorrelation diagnostics require the original chain; thinned traces must not be interpreted as full-chain convergence evidence.
+The posterior-analysis notebook reads `../posterior/posterior_samples.npz`. Original processing: discard 15000 steps, reject walkers whose post-burn-in fraction of moving steps is below 0.02, then use emcee thinning by 1000. There are 45 retained draws per kept walker, 108 kept walkers and 16 parameters. Full-resolution traces and autocorrelation diagnostics require the original chain; thinned traces must not be interpreted as full-chain convergence evidence.
 
 ## Full MCMC sampling (optional, expensive)
 
@@ -50,12 +54,12 @@ Install an MPI implementation (e.g. Open MPI) and the optional dependencies:
 
 ```bash
 python -m pip install -r requirements-mpi.txt
-mpiexec -n 4 python mcmc/emcee_UVLF_P18_a16_merged_z20.py
+mpiexec -n 4 python mcmc/emcee_UVLF_P18_a16_merged_k.py
 ```
 
-The script uses 112 walkers and 60000 steps per invocation, with the original prior and model settings. A fresh HDF5 backend starts from the supplied initialization ranges; an existing backend resumes. No existing chain is reset. The output is `mcmc/emcee_UVLF_P18_a16_merged_z20.h5`. The script does not fix a random seed, so a fresh chain will not reproduce historical samples byte for byte. This expensive sampling command was not executed for the release.
+The script uses 112 walkers and 60000 steps per invocation, with the original prior and model settings. The supplied script draws fresh initial walker positions on every invocation, including when an HDF5 backend already exists. Use a new output location for a fresh run; this is not a continuous-state resume command. The output is `mcmc/emcee_UVLF_P18_a16_merged_k.h5`. The script does not fix a random seed, so a fresh chain will not reproduce historical samples byte for byte. This expensive sampling command was not executed for the release.
 
-The full original chain is about 1.9 GB and is not included in this GitHub repository. Its SHA-256 and selection details are recorded in `posterior/metadata.json`; this repository provides the processed sample snapshot, not full-chain diagnostic data. No public download location for the full chain is asserted.
+The full original chain is about 1.16 GB and is not included in this GitHub repository. Its SHA-256 and selection details are recorded in `posterior/metadata.json`; this repository provides the processed sample snapshot, not full-chain diagnostic data. No public download location for the full chain is asserted.
 
 ## Data provenance and units
 

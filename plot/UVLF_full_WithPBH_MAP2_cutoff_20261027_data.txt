@@ -1,7 +1,7 @@
 # Display revision: Whitler publication year corrected to 2025.
 # Chemerynska 2026, Atek 2024 UNCOVER and Robertson 2024 hidden at user request: 23 points.
 # All 178 ledger rows retained; plot_flag selects 150 displayed points.
-# The ten newly added faint-end points and both model curves are unchanged.
+# Observations unchanged; With PBH uses the updated cutoff; No PBH reference unchanged.
 dataset_id	reference	year	doi_or_arxiv	publication_status	source_table	redshift_panel	z_effective	z_min	z_max	M_UV	M_UV_err_minus	M_UV_err_plus	phi	phi_err_minus	phi_err_plus	limit_type	uncertainty_definition	plot_flag	notes
 bouwens2021_primary	Bouwens et al. (2021)	2021	10.3847/1538-3881/abf83e	published	Table 4	6	5.9			-22.52			2e-06	2e-06	2e-06	detection	symmetric uncertainty reported in Table 4	True	primary UVLF measurement used for the assigned redshift panel
 bouwens2021_primary	Bouwens et al. (2021)	2021	10.3847/1538-3881/abf83e	published	Table 4	6	5.9			-22.02			1.4e-05	5e-06	5e-06	detection	symmetric uncertainty reported in Table 4	True	primary UVLF measurement used for the assigned redshift panel

@@ -9,17 +9,21 @@
 | 路径 | 内容 |
 | --- | --- |
 | `mcmc/` | 作者提供的 16 参数模型、MPI/emcee 采样程序、UVLF 似然输入数据和尘埃校准表 |
-| `plot/UVLF_full_WithPBH_noRobertson_20261016.ipynb` | 使用已有理论曲线缓存绘制七个红移面板的 UVLF 图 |
-| `plot/prl_free_sf_accretion_rate_v22.ipynb` | 绘制作者提供的六个红移箱的爱丁顿比约束及对应吸积率 |
+| `plot/UVLF_full_WithPBH_MAP2_cutoff_20261027.ipynb` | 使用给定 MAP2 参数和更新的 PBH 截断计算七个红移面板的 UVLF 图 |
+| `plot/prl_free_sf_accretion_rate_v26.ipynb` | 绘制作者提供的六个红移箱的爱丁顿比约束及对应吸积率 |
 | `plot/statistics and plot_F_216_consistent_MCSamples_shortest68.ipynb` | 作者提供的后验分析 notebook，已调整为读取便于分发的样本文件 |
 | `plot/*.txt` | 文献观测数据台账、理论曲线缓存，以及绘图输入和导出数据 |
-| `posterior/posterior_samples.npz` | 按原 notebook 的处理规则选出的 6512 个等权重样本 |
+| `posterior/posterior_samples.npz` | 按原 notebook 的处理规则选出的 4860 个等权重样本 |
 | `posterior/metadata.json` | 原始链的校验值、处理设置、剔除的 walker 编号和数组维度 |
 | `posterior/parameters.csv` | 后验数组的参数列顺序及定义 |
 | `scripts/export_posterior.py` | 从完整 HDF5 链重新导出后验样本文件 |
 | `figures/` | 运行所提供 notebook 后生成的 PDF 预览图 |
 
 本次发布保留作者提供的科学计算设置。整理过程中没有重新运行 MCMC，也没有验证论文的统计主张。
+
+## 当前版本
+
+依据作者提供的 `emcee_UVLF_P18_a16_merged_k.py` 和新版后验 notebook、2026-10-27 的 MAP2 UVLF notebook，以及爱丁顿比 notebook v26 更新。原始链共 60000 步；按提供的移动比例规则剔除编号为 10、55、76、89 的 walker。吸积率摘要为作者给定数值，未由抽稀样本重新推断。旧的 No PBH 及参考数据表仍作为当前 UVLF notebook 的输入保留。UVLF 图的 MAP2 参数向量固定取自所提供 notebook，未替换为抽稀样本中对数后验最大的参数点。
 
 ## 安装
 
@@ -40,9 +44,9 @@ cd plot
 jupyter lab
 ```
 
-打开相应绘图 notebook，按顺序运行所有单元。请将 notebook 的工作目录设为 `plot/`，其中的相对文件名均以该目录为基准。UVLF notebook 读取已有模型曲线缓存，不重新拟合。吸积率 notebook 绘制作者提供的数值摘要，不从后验样本中重新推断这些数值。程序指定 Times New Roman 字体；系统缺少该字体时，可能使用替代字体。
+打开相应绘图 notebook，按顺序运行所有单元。请将 notebook 的工作目录设为 `plot/`，其中的相对文件名均以该目录为基准。UVLF notebook 使用给定 MAP2 参数和更新的 PBH 截断重新计算 With PBH 曲线，保留缓存的 No PBH 参考曲线，不重新拟合。吸积率 notebook 绘制作者提供的数值摘要，不从后验样本中重新推断这些数值。程序指定 Times New Roman 字体；系统缺少该字体时，可能使用替代字体。
 
-后验分析 notebook 读取 `../posterior/posterior_samples.npz`。原处理规则为：丢弃前 30000 步，剔除 burn-in 后发生移动的步数比例低于 0.02 的 walker，再按 emcee 的 `thin=1000` 规则抽稀。最终保留 88 个 walker，每个 walker 有 74 个采样点，每个采样点包含 16 个参数。完整分辨率的轨迹和自相关诊断需要原始链；不能把抽稀后的轨迹当作完整链已收敛的证据。
+后验分析 notebook 读取 `../posterior/posterior_samples.npz`。原处理规则为：丢弃前 15000 步，剔除 burn-in 后发生移动的步数比例低于 0.02 的 walker，再按 emcee 的 `thin=1000` 规则抽稀。最终保留 108 个 walker，每个 walker 有 45 个采样点，每个采样点包含 16 个参数。完整分辨率的轨迹和自相关诊断需要原始链；不能把抽稀后的轨迹当作完整链已收敛的证据。
 
 ## 完整 MCMC 采样（可选，计算量较大）
 
@@ -50,12 +54,12 @@ jupyter lab
 
 ```bash
 python -m pip install -r requirements-mpi.txt
-mpiexec -n 4 python mcmc/emcee_UVLF_P18_a16_merged_z20.py
+mpiexec -n 4 python mcmc/emcee_UVLF_P18_a16_merged_k.py
 ```
 
-脚本保留原先验和模型设置，使用 112 个 walker，每次调用运行 60000 步。新建 HDF5 后端时，程序从给定初始化范围生成初始位置；后端已有链时继续采样，不重置原链。输出文件为 `mcmc/emcee_UVLF_P18_a16_merged_z20.h5`。脚本没有固定随机种子，因此新链不会逐字节复现历史样本。本次发布整理没有执行这项耗时采样。
+脚本保留原先验和模型设置，使用 112 个 walker，每次调用运行 60000 步。所提供脚本每次调用都会从给定范围生成新的 walker 初始位置，包括后端已有链时。新采样请使用新的输出位置；此命令不按原链末态连续恢复采样。输出文件为 `mcmc/emcee_UVLF_P18_a16_merged_k.h5`。脚本没有固定随机种子，因此新链不会逐字节复现历史样本。本次发布整理没有执行这项耗时采样。
 
-完整原始链约 1.9 GB，本 GitHub 仓库没有包含该文件。`posterior/metadata.json` 记录了它的 SHA-256 校验值和样本筛选细节。仓库提供处理后的后验样本，不包含完整链诊断所需的全部数据，也没有声明完整链的公开下载地址。
+完整原始链约 1.16 GB，本 GitHub 仓库没有包含该文件。`posterior/metadata.json` 记录了它的 SHA-256 校验值和样本筛选细节。仓库提供处理后的后验样本，不包含完整链诊断所需的全部数据，也没有声明完整链的公开下载地址。
 
 ## 数据来源与单位
 

@@ -1,7 +1,7 @@
-redshift_label,log10_lambda_center,minus_dex,plus_dex,log10_lambda_upper68,mdot_factor,source
-6–8,,,,-3.8,9.73,supplied plotting notebook; not re-inferred
-9,,,,-4.4,9.73,supplied plotting notebook; not re-inferred
-10,-1.8,6.5,1.4,,9.73,supplied plotting notebook; not re-inferred
-11,-0.9,2.4,1.0,,9.73,supplied plotting notebook; not re-inferred
-12.5,-1.1,3.0,2.2,,9.73,supplied plotting notebook; not re-inferred
-13.5–1000,,,,-2.3,9.73,supplied plotting notebook; not re-inferred
+redshift_bin,log10_center,minus_dex,plus_dex,log10_upper_limit,mdot_factor
+6–8,nan,nan,nan,-3.7,9.73
+9,nan,nan,nan,-4.4,9.73
+10,-1.7,3.0,1.1,nan,9.73
+11,-0.8,1.7,0.5,nan,9.73
+12.5,-1.1,2.0,1.5,nan,9.73
+13.5–1000,nan,nan,nan,-2.9,9.73

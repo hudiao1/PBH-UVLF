@@ -1,6 +1,6 @@
-# 导入计算所需包
 from pathlib import Path
-
+BASE_DIR = Path(__file__).resolve().parent
+# 导入计算所需包
 import numpy as np
 import camb
 from camb import model
@@ -53,8 +53,8 @@ def w_f(k, R):
     x = k * R
     return 3 * (np.sin(x) - x * np.cos(x)) / x**3
 
-k_sigma = np.logspace(-5, 1, 1000)  # Mpc^-1 单位
-k_sigma_factor = k_sigma**2 / (2.0 * np.pi**2)
+k_sigma = None  # 初始化时设为 [1e-5, k_cut]，单位 Mpc^-1
+k_sigma_factor = None
 def sigma_PBH(R, z, logM_PBH, logf_PBH, Omega_m, Omega_b, h):
     """
     使用全局变量 sigma_cb_interp_func 来获取 sigma_cb(R, z)
@@ -470,8 +470,7 @@ points, weights = np.polynomial.legendre.leggauss(25)
 
 # Import HST UV LF data
 minError = 0.2
-DATA_DIR = Path(__file__).resolve().parent
-UVLF_PBH = np.loadtxt(DATA_DIR / "UVLF_PBH.txt")
+UVLF_PBH = np.loadtxt(BASE_DIR / "UVLF_PBH.txt")
 UVLF_PBH[:, 4] = np.array(
     list(map(max, zip(minError * UVLF_PBH[:, 3], UVLF_PBH[:, 4])))
 )
@@ -481,7 +480,7 @@ UVLF_PBH[:, 5] = np.array(
 zs = np.unique(UVLF_PBH[:, 0])
 
 # Beta functions for dust correction
-betadata = np.loadtxt(DATA_DIR / "Beta_parameters.txt", unpack=True)
+betadata = np.loadtxt(BASE_DIR / "Beta_parameters.txt", unpack=True)
 betainterp = PchipInterpolator(betadata[0], betadata[1])
 dbetadMUVinterp = PchipInterpolator(betadata[0], betadata[2])
 
@@ -510,6 +509,7 @@ Mhalos = np.geomspace(1e8, 1e14, 1000)
 # 全局变量
 sigma_cb_interp_func = None
 cosmo_initialized = False
+cutoff_logM_global = None
 growth_interp_global = None
 growthf_interp_global = None
 hubble_interp_global = None
@@ -562,15 +562,13 @@ def initialize_fixed_cosmology():
 
     pars.set_matter_power(
         redshifts=sorted(z_for_sigma, reverse=True),
-        kmax=5.0,
+        kmax=100.0,
         nonlinear=False,
     )
     pars.WantTransfer = True
 
     # 第一次 CAMB：校准 sigma8
     results = camb.get_results(pars)
-    # 保存固定宇宙学的 CAMB results，供 M_BH(z) 使用
-    camb_results_global = results
     h_temp = results.Params.H0 / 100.0
     sigma8_all = results.get_sigmaR(
         8.0 / h_temp,
@@ -592,6 +590,7 @@ def initialize_fixed_cosmology():
 
     # 第二次 CAMB：最终结果
     results = camb.get_results(pars)
+    camb_results_global = results
 
     h_global = results.Params.H0 / 100.0
     Omega_m_global = (
@@ -626,6 +625,21 @@ def initialize_fixed_cosmology():
             / rcomoving(z, Omega_m_HST, h_HST)
         )
     cosmo_initialized = True
+
+
+def update_pbh_cutoff(logM_PBH):
+    """只更新 PBH 项的积分网格；固定宇宙学须先初始化。"""
+    global cutoff_logM_global, k_sigma, k_sigma_factor
+    if cutoff_logM_global == logM_PBH:
+        return
+    # n_PBH / f_PBH = rho_DM / M_PBH，与 p_PBH 的密度定义一致。
+    rho_dm = (Omega_m_global - Omega_b_global) * rho_crit * h_global**2
+    k_cut = (2.0 * np.pi**2 * rho_dm / 10.0**logM_PBH) ** (1.0 / 3.0)
+    k_sigma = np.logspace(-5, np.log10(k_cut), 1000)
+    k_sigma_factor = k_sigma**2 / (2.0 * np.pi**2)
+    cutoff_logM_global = logM_PBH
+
+
 def log_likelihood(param):
     try:
         return log_likelihood_impl(param)
@@ -674,6 +688,7 @@ def log_likelihood_impl(param):
     ) = param
 
     initialize_fixed_cosmology()
+    update_pbh_cutoff(logM_PBH)
 
     h = h_global
     Omega_m = Omega_m_global
@@ -812,21 +827,21 @@ def log_posterior(param):
     return lp + log_likelihood(param)
 # 定义每个参数的均匀分布范围（示例，需按实际情况填写）
 param_bounds = [
-    (1, 8),           # logM_PBH
-    (-12, -1),         # -12 < logf_PBH <= 0
-    (-15, 0 ),          # -8 < loglambda_E69 < 2
-    (-15, 0 ),
-    (-15, 1 ),          # -8 < loglambda_E10 < 2
-    (-15, 1 ),          # -8 < loglambda_E11 < 2
-    (-15, 1 ),          # -8 < loglambda_E12 < 2
-    (-15, 1),           # loglambda_E13p5: 13.5 <= z <= 1000
-    (-0.6, -0.2 ),          # -3 < alphastar < 0
-    (0.2 , 2.8 ),          # 0 < betastar < 3
-    (-2.8, -1 ),          # -3 < epsilonstar_slope < 1
-    (-2.8, -1 ),          # -3 < epsilonstar_icept < 0
-    (-1.5, 2.5 ),          # -3 < Mc_slope < 3
-    (11.5 , 13.5),          # 9< Mc_icept < 13
-    (0.001, 1.2),        # 0.001 < sigma_MUV < 3
+    (0, 6),           # logM_PBH
+    (-5.5, -1),         # -12 < logf_PBH <= 0
+    (-15, -3.8),          # -8 < loglambda_E69 < 2
+    (-15, -4.4),
+    (-8, 0 ),          # -8 < loglambda_E10 < 2
+    (-3, 0 ),          # -8 < loglambda_E11 < 2
+    (-4, 1 ),          # -8 < loglambda_E12 < 2
+    (-15, -2.3),           # loglambda_E13p5: 13.5 <= z <= 1000
+    (-0.5, -0.3 ),          # -3 < alphastar < 0
+    (0.6 , 2.8 ),          # 0 < betastar < 3
+    (-2.8, -1.8 ),          # -3 < epsilonstar_slope < 1
+    (-2.7, -2 ),          # -3 < epsilonstar_icept < 0
+    (-0.6, 2.5 ),          # -3 < Mc_slope < 3
+    (11.5 , 12.5),          # 9< Mc_icept < 13
+    (0.4, 1.2),        # 0.001 < sigma_MUV < 3
     (1.6, 2.4),        # 1.5 < Q < 2.5
 ]
 def run_mcmc():
@@ -840,14 +855,12 @@ def run_mcmc():
         nsteps = 60000   # 链长
         pos = uniform_prior_rvs(nwalkers, param_bounds)
         # 初始化保存文件
-        new_backend = emcee.backends.HDFBackend(str(DATA_DIR / 'emcee_UVLF_P18_a16_merged_z20.h5'))
+        new_backend = emcee.backends.HDFBackend(str(BASE_DIR / 'emcee_UVLF_P18_a16_merged_k.h5'))
         # 创建进程池并运行采样
         new_sampler = emcee.EnsembleSampler(
             nwalkers, ndim, log_posterior, pool=pool, backend=new_backend
         )
-        # A fresh backend needs initial positions; an existing backend resumes.
-        initial_state = None if new_backend.iteration else pos
-        new_sampler.run_mcmc(initial_state, nsteps, progress=True)
+        new_sampler.run_mcmc(pos, nsteps, progress=True)
 
 
 if __name__ == "__main__":

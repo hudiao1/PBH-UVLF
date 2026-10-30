@@ -1,0 +1,17 @@
+logM_PBH = 0.887548
+logf_PBH = -3.03851
+loglambda_E68 = -6.35425
+loglambda_E9 = -3.04209
+loglambda_E10 = -2.13428
+loglambda_E11 = -1.63502
+loglambda_E12 = -1.46691
+loglambda_E13p5 = -1.56414
+alphastar = -0.458484
+betastar = 2.66833
+epsilonstar_slope = -2.88967
+epsilonstar_icept = -2.49318
+Mc_slope = 0.921366
+Mc_icept = 11.7474
+sigma_MUV = 1.06165
+Q = 1.87411
+# Supplied log posterior = -22.345095; not recomputed here.

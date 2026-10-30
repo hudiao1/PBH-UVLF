@@ -11,7 +11,7 @@ import numpy as np
 def export(chain_path, output_dir):
     output_dir.mkdir(parents=True, exist_ok=True)
     reader = emcee.backends.HDFBackend(str(chain_path), read_only=True)
-    discard, thin = 30000, 1000
+    discard, thin = 15000, 1000
     if reader.iteration <= discard + thin:
         raise ValueError('Chain is too short for the original notebook selection.')
     with h5py.File(chain_path, 'r') as f:
